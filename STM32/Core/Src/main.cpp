@@ -18,6 +18,7 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include <main.hpp>
+#include <stepper.hpp>
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -92,7 +93,13 @@ int main(void)
   MX_I2C1_Init();
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
+  	  Pin motor1_step = Pin(GPIOB, GPIO_PIN_4);
+  	  Pin motor1_direction = Pin(GPIOB, GPIO_PIN_10);
+  	  Pin motor2_step = Pin(GPIOB, GPIO_PIN_3);
+  	  Pin motor2_direction = Pin(GPIOB, GPIO_PIN_5);
 
+  	  Stepper motor1 = Stepper(motor1_step, motor1_direction);
+  	  Stepper motor2 = Stepper(motor2_step, motor2_direction);
   /* USER CODE END 2 */
 
   /* Infinite loop */
