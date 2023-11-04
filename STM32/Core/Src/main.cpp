@@ -111,8 +111,8 @@ int main(void)
   Pin motor2_step = Pin(GPIOB, GPIO_PIN_3);
   Pin motor2_direction = Pin(GPIOB, GPIO_PIN_5);
 
-  Stepper motor1 = Stepper(motor1_step, motor1_direction);
-  Stepper motor2 = Stepper(motor2_step, motor2_direction);
+  Stepper motor1 = Stepper(&motor1_step, &motor1_direction);
+  Stepper motor2 = Stepper(&motor2_step, &motor2_direction);
 
   /* USER CODE END 2 */
 
