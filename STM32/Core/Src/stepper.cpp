@@ -18,16 +18,18 @@ Stepper::Stepper(Pin *step, Pin *direction) : step_pin(step), direction_pin(dire
 
 }
 
-void Stepper::rotate_angle(float angle, bool clockwise) {
+void Stepper::rotate_angle(float angle, bool clockwise, uint8_t rpm) {
 	direction_pin.write_pin((clockwise == true) ? HIGH : LOW);
 
-	uint8_t steps = angle / STEP_ANGLE;
+	uint16_t steps = angle / STEP_ANGLE;
 
-	for(uint8_t step = 0; step < steps; step++) {
+	uint32_t us_per_step = (1 / rpm) * (60000000) * (1 / 200);
+
+	for(uint16_t step = 0; step < steps; step++) {
 		step_pin.write_pin(HIGH);
-		HAL_delay(1);
+		delay_us(us_per_step / 2);
 		step_pin.write_pin(LOW);
-		HAL_delay(1);
+		delay_us(us_per_step / 2);
 	}
 }
 

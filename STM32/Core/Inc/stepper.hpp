@@ -23,7 +23,7 @@ private:
 
 public:
 	Stepper(Pin *step, Pin *direction);
-	void rotate_angle(float angle, bool clockwise);
+	void rotate_angle(float angle, bool clockwise, uint8_t rpm);
 };
 
 #endif /* INC_STEPPER_HPP_ */
