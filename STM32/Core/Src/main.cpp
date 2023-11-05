@@ -19,6 +19,9 @@
 /* Includes ------------------------------------------------------------------*/
 #include <main.hpp>
 #include <stepper.hpp>
+#include <input_queue.hpp>
+#include <iostream>
+#include <sstream>
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -47,6 +50,10 @@ TIM_HandleTypeDef htim1;
 UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
+
+Input_Queue queue = Input_Queue();
+uint8_t  receive_data[BUFFER_SIZE];
+
 
 /* USER CODE END PV */
 
@@ -114,6 +121,11 @@ int main(void)
   Stepper motor1 = Stepper(&motor1_step, &motor1_direction);
   Stepper motor2 = Stepper(&motor2_step, &motor2_direction);
 
+  uint8_t  tx_buffer[BUFFER_SIZE];
+  uint8_t  receive_data[BUFFER_SIZE];
+  uint16_t total_arm_angle;
+
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -123,6 +135,28 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+	  HAL_UART_Receive_IT(&huart2, receive_data, 100);
+	  Data data = queue.dequeue();
+	  if(data.arm_angle_dir){
+		  total_arm_angle += data.arm_angle;
+	  }
+	  else if(!data.arm_angle_dir){
+		  total_arm_angle -= data.arm_angle;
+	  }
+	  bool flag = false;
+	  if((total_arm_angle < 0) | (total_arm_angle > 180)){
+		  tx_buffer[1] = (flag);
+		  HAL_UART_Transmit(&huart2, tx_buffer, sizeof(tx_buffer), 10);
+		  HAL_Delay(1000);
+	  }
+	  else{
+		  flag = true;
+		  tx_buffer[1] = (flag);
+		  HAL_UART_Transmit(&huart2, tx_buffer, sizeof(tx_buffer), 10);
+		  HAL_Delay(1000);
+
+	  }
+
   }
   /* USER CODE END 3 */
 }
@@ -307,6 +341,18 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart){
+if(huart ==&huart2){
+	Data data;
+	data.base_angle = int16_t((receive_data[0]<<8) | (receive_data[1]))/1000.0;
+	data.base_angle_dir = int16_t(receive_data[3]) !=0;
+	data.arm_angle = int16_t((receive_data[4]<<8) | (receive_data[5]))/1000.0;
+	data.arm_angle_dir = int16_t(receive_data[6]) != 0;
+	queue.enqueue(data);
+	HAL_UART_Receive_IT(&huart2, receive_data, 100);
+}
+
+}
 
 /* USER CODE END 4 */
 

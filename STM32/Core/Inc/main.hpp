@@ -27,7 +27,8 @@ extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
-#include "stm32f4xx_hal.h"
+#include <stm32f4xx_hal.h>
+
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -58,7 +59,7 @@ void delay_us (uint32_t us);
 
 /* Private defines -----------------------------------------------------------*/
 /* USER CODE BEGIN Private defines */
-
+#define BUFFER_SIZE 20
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus
