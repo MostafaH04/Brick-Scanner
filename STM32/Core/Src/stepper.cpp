@@ -14,16 +14,16 @@ GPIO_PinState Pin::read_pin() {
 }
 
 //Stepper struct
-Stepper::Stepper(Pin *step, Pin *direction) : step_pin(step), direction_pin(direction) {
+Stepper::Stepper(Pin *step, Pin *direction, uint8_t resolution) : step_pin(step), direction_pin(direction), step_res(resolution) {
 
 }
 
 void Stepper::rotate_angle(float angle, bool clockwise, uint8_t rpm) {
 	direction_pin -> write_pin((clockwise == true) ? HIGH : LOW);
 
-	uint16_t steps = angle / STEP_ANGLE;
+	uint16_t steps = (angle / STEP_ANGLE) * (step_res);
 
-	uint32_t us_per_step = (1 / rpm) * (60000000) * (1 / 200);
+	uint32_t us_per_step = (1 / rpm) * (60000000) * (1 / (200 * step_res));
 
 	for(uint16_t step = 0; step < steps; step++) {
 		step_pin -> write_pin(HIGH);
@@ -33,3 +33,6 @@ void Stepper::rotate_angle(float angle, bool clockwise, uint8_t rpm) {
 	}
 }
 
+void Stepper::update_res(int resolution) {
+	step_res = resolution;
+}

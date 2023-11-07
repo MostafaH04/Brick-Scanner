@@ -20,10 +20,12 @@ class Stepper {
 private:
 	Pin *step_pin;
 	Pin *direction_pin;
+	uint8_t step_res;
 
 public:
-	Stepper(Pin *step, Pin *direction);
+	Stepper(Pin *step, Pin *direction, uint8_t resolution);
 	void rotate_angle(float angle, bool clockwise, uint8_t rpm);
+	void update_res(int resolution);
 };
 
 #endif /* INC_STEPPER_HPP_ */

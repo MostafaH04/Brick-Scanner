@@ -106,13 +106,16 @@ int main(void)
 
   /* USER CODE BEGIN 2 */
 
-  Pin motor1_step = Pin(GPIOB, GPIO_PIN_4);
-  Pin motor1_direction = Pin(GPIOB, GPIO_PIN_10);
-  Pin motor2_step = Pin(GPIOB, GPIO_PIN_3);
-  Pin motor2_direction = Pin(GPIOB, GPIO_PIN_5);
+  Pin base_step = Pin(GPIOB, GPIO_PIN_4);
+  Pin base_direction = Pin(GPIOB, GPIO_PIN_10);
+  Pin arm_step = Pin(GPIOB, GPIO_PIN_3);
+  Pin arm_direction = Pin(GPIOB, GPIO_PIN_5);
 
-  Stepper motor1 = Stepper(&motor1_step, &motor1_direction);
-  Stepper motor2 = Stepper(&motor2_step, &motor2_direction);
+  Pin arm_MS1 = Pin(GPIOA, GPIO_PIN_8);
+  arm_MS1.write_pin(HIGH);
+
+  Stepper base_motor = Stepper(&base_step, &base_direction, 8);
+  Stepper arm_motor = Stepper(&arm_step, &arm_direction, 64);
 
   /* USER CODE END 2 */
 
@@ -120,6 +123,11 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+	  arm_motor.rotate_angle(360, true, 100);
+	  HAL_Delay(1);
+	  arm_motor.rotate_angle(360, false, 200);
+	  HAL_Delay(1);
+
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -297,12 +305,22 @@ static void MX_GPIO_Init(void)
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOB, GPIO_PIN_10|GPIO_PIN_3|GPIO_PIN_4|GPIO_PIN_5, GPIO_PIN_RESET);
 
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_RESET);
+
   /*Configure GPIO pins : PB10 PB3 PB4 PB5 */
   GPIO_InitStruct.Pin = GPIO_PIN_10|GPIO_PIN_3|GPIO_PIN_4|GPIO_PIN_5;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : PA8 */
+  GPIO_InitStruct.Pin = GPIO_PIN_8;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
 }
 
