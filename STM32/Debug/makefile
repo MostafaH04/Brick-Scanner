@@ -75,8 +75,8 @@ all: main-build
 main-build: Brick_Scanner.elf secondary-outputs
 
 # Tool invocations
-Brick_Scanner.elf Brick_Scanner.map: $(OBJS) $(USER_OBJS) C:\Users\mahir\Desktop\Brick-Scanner\STM32\STM32F401RETX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-g++ -o "Brick_Scanner.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\mahir\Desktop\Brick-Scanner\STM32\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Brick_Scanner.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+Brick_Scanner.elf Brick_Scanner.map: $(OBJS) $(USER_OBJS) C:\Users\mahus\Desktop\2A\ Term\MTE201\Brick-Scanner\STM32\STM32F401RETX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-g++ -o "Brick_Scanner.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\mahus\Desktop\2A Term\MTE201\Brick-Scanner\STM32\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Brick_Scanner.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

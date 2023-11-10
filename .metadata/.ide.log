@@ -1,0 +1,30 @@
+2023-11-07 16:30:37,176 [INFO] Activator:177 - 
+
+
+2023-11-07 16:30:37,177 [INFO] Activator:178 - !SESSION log4j initialized
+2023-11-07 16:31:03,533 [ERROR] ConfigurationRetriever:139 - IOException on connection: sw-center.st.com
+2023-11-07 16:31:03,535 [ERROR] ConfigurationRetriever:139 - IOException on connection: sw-center.st.com
+2023-11-07 16:31:03,536 [ERROR] ConfigurationRetriever:139 - IOException on connection: sw-center.st.com
+2023-11-07 16:31:24,638 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
+2023-11-07 16:31:24,639 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] SLF4J: Defaulting to no-operation (NOP) logger implementation
+2023-11-07 16:31:24,641 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
+2023-11-07 16:31:36,822 [ERROR] ConfigurationRetriever:139 - IOException on connection: sw-center.st.com
+2023-11-07 16:31:36,824 [ERROR] ConfigurationRetriever:139 - IOException on connection: sw-center.st.com
+2023-11-07 16:31:36,824 [ERROR] ConfigurationRetriever:139 - IOException on connection: sw-center.st.com
+2023-11-07 16:31:48,136 [INFO] Activator:177 - 
+
+
+2023-11-07 16:31:48,137 [INFO] Activator:178 - !SESSION log4j initialized
+2023-11-07 16:31:50,986 [ERROR] ConfigurationRetriever:139 - IOException on connection: sw-center.st.com
+2023-11-07 16:31:50,988 [ERROR] ConfigurationRetriever:139 - IOException on connection: sw-center.st.com
+2023-11-07 16:31:50,988 [ERROR] ConfigurationRetriever:139 - IOException on connection: sw-center.st.com
+2023-11-07 16:32:12,559 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
+2023-11-07 16:32:12,560 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] SLF4J: Defaulting to no-operation (NOP) logger implementation
+2023-11-07 16:32:12,561 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
+2023-11-07 16:33:01,944 [ERROR] ConfigurationRetriever:139 - IOException on connection: sw-center.st.com
+2023-11-07 16:33:01,945 [ERROR] ConfigurationRetriever:139 - IOException on connection: sw-center.st.com
+2023-11-07 16:33:01,945 [ERROR] ConfigurationRetriever:139 - IOException on connection: sw-center.st.com
+2023-11-07 16:33:18,619 [INFO] Activator:177 - 
+
+
+2023-11-07 16:33:18,621 [INFO] Activator:178 - !SESSION log4j initialized

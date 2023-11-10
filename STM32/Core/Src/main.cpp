@@ -84,7 +84,8 @@ int main(void)
   /* MCU Configuration--------------------------------------------------------*/
 
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
-  HAL_Init();
+
+	HAL_Init();
 
   /* USER CODE BEGIN Init */
 
@@ -115,7 +116,9 @@ int main(void)
   arm_MS1.write_pin(HIGH);
 
   Stepper base_motor = Stepper(&base_step, &base_direction, 8);
-  Stepper arm_motor = Stepper(&arm_step, &arm_direction, 64);
+  Stepper arm_motor = Stepper(&arm_step, &arm_direction, 64*5);
+
+  HAL_TIM_Base_Start(&htim1);
 
   /* USER CODE END 2 */
 
@@ -123,10 +126,12 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  arm_motor.rotate_angle(360, true, 100);
-	  HAL_Delay(1);
-	  arm_motor.rotate_angle(360, false, 200);
-	  HAL_Delay(1);
+	  arm_motor.rotate_angle(360, true, 60);
+	  HAL_Delay(1000);
+	  arm_motor.rotate_angle(360, false, 60);
+	  HAL_Delay(1000);
+	  //arm_motor.rotate_angle(360, false, 1000);
+	  //HAL_Delay(1);
 
     /* USER CODE END WHILE */
 

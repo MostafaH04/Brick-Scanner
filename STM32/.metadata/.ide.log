@@ -1,0 +1,13 @@
+2023-11-07 16:30:01,720 [INFO] Activator:177 - 
+
+
+2023-11-07 16:30:01,722 [INFO] Activator:178 - !SESSION log4j initialized
+2023-11-07 16:30:05,328 [ERROR] ConfigurationRetriever:139 - IOException on connection: sw-center.st.com
+2023-11-07 16:30:05,329 [ERROR] ConfigurationRetriever:139 - IOException on connection: sw-center.st.com
+2023-11-07 16:30:05,330 [ERROR] ConfigurationRetriever:139 - IOException on connection: sw-center.st.com
+2023-11-07 16:30:28,438 [ERROR] ConfigurationRetriever:139 - IOException on connection: sw-center.st.com
+2023-11-07 16:30:28,439 [ERROR] ConfigurationRetriever:139 - IOException on connection: sw-center.st.com
+2023-11-07 16:30:28,439 [ERROR] ConfigurationRetriever:139 - IOException on connection: sw-center.st.com
+2023-11-07 16:30:28,585 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
+2023-11-07 16:30:28,585 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] SLF4J: Defaulting to no-operation (NOP) logger implementation
+2023-11-07 16:30:28,586 [ERROR] LogOutputStream:74 - [STDERR_REDIRECT] SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
