@@ -55,16 +55,28 @@ def getLengths(img):
 
      #   if img is not None:
       #      images.append(img)
-   # return images
+   # return imagesx
 
-cap = cv2.VideoCapture(0);
+cap = cv2.VideoCapture(2, cv2.CAP_DSHOW) # this is the magic!
+
+cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
+cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
+cap.set(cv2.CAP_PROP_AUTOFOCUS, 0)
+
 #images = load_images_from_folder("Simulation/Images/")
 mtx = np.load("mat.npy")
 dist = np.load("dist.npy")
 
+def widthCalib(x):
+  return 0.09348*x-1.22995
+
+def heightCalib(x):
+  return 0.09416*x-1.55792
+
 while True:
   _,image = cap.read() 
   h,  w = image.shape[:2]
+  #print(h,w)
   newcameramtx, roi = cv2.getOptimalNewCameraMatrix(mtx, dist, (w,h), 1, (w,h))
   # undistort
   dst = cv2.undistort(image, mtx, dist, None, newcameramtx)
@@ -73,21 +85,29 @@ while True:
   image = dst[y:y+h, x:x+w]
   clickNum = -1
   imgray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-  ret, thresh = cv2.threshold(imgray, 50, 255, 0)
+  ret, thresh = cv2.threshold(imgray, 130, 255, 0)
   contours, hierarchy = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
   cntsSorted = sorted(contours, key=lambda x: cv2.contourArea(x))
   for cnt in cntsSorted[::-1]:
     # Get rect
+    
     rect = cv2.minAreaRect(cnt)
     (x, y), (w, h), angle = rect
+    if w*h > 250000:
+      continue
+    #print(w*h)
     # Display rectangle
     box = cv2.boxPoints(rect)
     box = np.int0(box)
     (x, y), (w, h), angle = rect
     cv2.circle(image, (int(x), int(y)), 5, (0, 0, 255), -1)
     cv2.polylines(image, [box], True, (255, 0, 0), 2)
-    cv2.putText(image, "Width {} px".format(round(w, 1)), (int(x - 100), int(y - 20)), cv2.FONT_HERSHEY_PLAIN, 2, (100, 200, 0), 2)
-    cv2.putText(image, "Height {} px".format(round(h, 1)), (int(x - 100), int(y + 15)), cv2.FONT_HERSHEY_PLAIN, 2, (100, 200, 0), 2)
+    cv2.putText(image, "Width {} mm".format(round(widthCalib(w), 2)), (int(x - 100), int(y - 20)), cv2.FONT_HERSHEY_PLAIN, 2, (255, 100, 0), 2)
+    cv2.putText(image, "Height {} mm".format(round(heightCalib(h), 2)), (int(x - 100), int(y + 15)), cv2.FONT_HERSHEY_PLAIN, 2, (255, 100, 0), 2)
+    
     break
-  getLengths(image)
+    
+  cv2.imshow("Frame", image)
+  if cv2.waitKey(1) is ord('q'): break
+  #getLengths(image)
   
