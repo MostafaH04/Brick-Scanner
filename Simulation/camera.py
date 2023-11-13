@@ -47,18 +47,47 @@ def getLengths(img):
       print(f"Side 2 Coords: {coords[2:]}, with Length: {lengths[1]}")
       
 
-def load_images_from_folder(folder):
-    images = []
-    for filename in os.listdir(folder):
-        img = cv2.imread(os.path.join(folder,filename))
-        img = cv2.resize(img, (1280,720))
+#def load_images_from_folder(folder):
+ #   images = []
+  #  for filename in os.listdir(folder):
+   #     img = cv2.imread(os.path.join(folder,filename))
+    #    img = cv2.resize(img, (1280,720))
 
-        if img is not None:
-            images.append(img)
-    return images
+     #   if img is not None:
+      #      images.append(img)
+   # return images
 
-images = load_images_from_folder("Simulation/Images/")
-for i in range(len(images)):
+cap = cv2.VideoCapture(0);
+#images = load_images_from_folder("Simulation/Images/")
+mtx = np.load("mat.npy")
+dist = np.load("dist.npy")
+
+while True:
+  _,image = cap.read() 
+  h,  w = image.shape[:2]
+  newcameramtx, roi = cv2.getOptimalNewCameraMatrix(mtx, dist, (w,h), 1, (w,h))
+  # undistort
+  dst = cv2.undistort(image, mtx, dist, None, newcameramtx)
+  # crop the image
+  x, y, w, h = roi
+  image = dst[y:y+h, x:x+w]
   clickNum = -1
-  getLengths(images[i])
+  imgray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+  ret, thresh = cv2.threshold(imgray, 50, 255, 0)
+  contours, hierarchy = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+  cntsSorted = sorted(contours, key=lambda x: cv2.contourArea(x))
+  for cnt in cntsSorted[::-1]:
+    # Get rect
+    rect = cv2.minAreaRect(cnt)
+    (x, y), (w, h), angle = rect
+    # Display rectangle
+    box = cv2.boxPoints(rect)
+    box = np.int0(box)
+    (x, y), (w, h), angle = rect
+    cv2.circle(image, (int(x), int(y)), 5, (0, 0, 255), -1)
+    cv2.polylines(image, [box], True, (255, 0, 0), 2)
+    cv2.putText(image, "Width {} px".format(round(w, 1)), (int(x - 100), int(y - 20)), cv2.FONT_HERSHEY_PLAIN, 2, (100, 200, 0), 2)
+    cv2.putText(image, "Height {} px".format(round(h, 1)), (int(x - 100), int(y + 15)), cv2.FONT_HERSHEY_PLAIN, 2, (100, 200, 0), 2)
+    break
+  getLengths(image)
   
